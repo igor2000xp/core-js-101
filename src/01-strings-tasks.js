@@ -213,8 +213,11 @@ function convertToUpperCase(str) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+// function extractEmails(/* str */) {
+//   throw new Error('Not implemented');
+// }
+function extractEmails(str) {
+  return str.split(';');
 }
 
 /**
@@ -240,8 +243,24 @@ function extractEmails(/* str */) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  let str = '';
+  for (let i = 0; i < height; i += 1) {
+    if (i === 0) {
+      str = '┌';
+      for (let j = 1; j < width - 1; j += 1) { str += '─'; }
+      str += '┐\n';
+    } else if (i > 0 && i < (height - 1)) {
+      str += '│';
+      for (let j = 1; j < width - 1; j += 1) { str += ' '; }
+      str += '│\n';
+    } else {
+      str += '└';
+      for (let j = 1; j < width - 1; j += 1) { str += '─'; }
+      str += '┘\n';
+    }
+  }
+  return str;
 }
 
 
