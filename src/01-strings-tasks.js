@@ -280,8 +280,31 @@ function getRectangleString(width, height) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+// function encodeToRot13(/* str */) {
+//   throw new Error('Not implemented');
+// }
+/*   'hello' => 'uryyb'
+*   'Why did the chicken cross the road?' => 'Jul qvq gur puvpxra pebff gur ebnq?'
+*   'Gb trg gb gur bgure fvqr!' => 'To get to the other side!'
+*   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+*    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
+*
+*/
+
+function encodeToRot13(str) {
+  const alpha = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz?! '
+    .split('');
+  const cipher = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm?! '
+    .split('');
+  const newStr = str.split('');
+  const newArr = [];
+  const returnStr = newStr.map((item, index) => {
+    for (let i = 0; i < alpha.length; i += 1) {
+      if (alpha[i] === item) newArr.push(cipher[i]);
+    }
+    return newArr[index];
+  });
+  return returnStr.join('');
 }
 
 /**
