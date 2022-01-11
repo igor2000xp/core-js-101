@@ -151,8 +151,12 @@ function repeatString(value, count) {
  *   'I like legends', 'end' => 'I like legs',
  *   'ABABAB','BA' => 'ABAB'
  */
-function removeFirstOccurrences(/* str, value */) {
-  throw new Error('Not implemented');
+// function removeFirstOccurrences(/* str, value */) {
+//   throw new Error('Not implemented');
+// }
+function removeFirstOccurrences(str, value) {
+  const newStr = str.replace(value, '');
+  return newStr;
 }
 
 /**
@@ -166,10 +170,16 @@ function removeFirstOccurrences(/* str, value */) {
  *   '<span>' => 'span'
  *   '<a>' => 'a'
  */
-function unbracketTag(/* str */) {
-  throw new Error('Not implemented');
+// function unbracketTag(/* str */) {
+//   throw new Error('Not implemented');
+// }
+function unbracketTag(str) {
+  const newStr = str.slice(1, (str.length - 1));
+  // Variant two:
+  // let newStr = str.replace('<', '');
+  // newStr = newStr.replace('>', '');
+  return newStr;
 }
-
 
 /**
  * Converts all characters of the specified string into the upper case
