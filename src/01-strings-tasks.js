@@ -320,10 +320,12 @@ function encodeToRot13(str) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+// function isString(/* value */) {
+//   throw new Error('Not implemented');
+// }
+function isString(value) {
+  return (typeof (value) === 'string') || (value instanceof String);
 }
-
 
 /**
  * Returns playid card id.
@@ -349,10 +351,23 @@ function isString(/* value */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+// function getCardId(/* value */) {
+//   throw new Error('Not implemented');
+// }
+function getCardId(value) {
+  const cards = [
+    'A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣',
+    'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦',
+    'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥',
+    'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠',
+  ];
+  const returnValue = cards.map((val, index) => {
+    let i;
+    if (val === value) { i = index; }
+    return i;
+  });
+  return returnValue.join('');
 }
-
 
 module.exports = {
   concatenateStrings,
