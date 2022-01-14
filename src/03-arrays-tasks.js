@@ -59,8 +59,13 @@ function generateOdds(len) {
  *    [0, 1, 2, 3, 4, 5] => [0, 1, 2, 3, 4, 5,   0, 1, 2, 3, 4, 5]
  *    [] => []
  */
-function doubleArray(/* arr */) {
-  throw new Error('Not implemented');
+// function doubleArray(/* arr */) {
+//   throw new Error('Not implemented');
+// }
+function doubleArray(arr) {
+  let newArr = Array((arr.length * 2)).fill(1);
+  newArr = newArr.map((item, ind) => ((ind < arr.length) ? arr[ind] : arr[ind - arr.length]));
+  return newArr;
 }
 
 /**
@@ -74,8 +79,11 @@ function doubleArray(/* arr */) {
  *    [-1, 2, -5, -4, 0] => [ 2 ]
  *    [] => []
  */
-function getArrayOfPositives(/* arr */) {
-  throw new Error('Not implemented');
+// function getArrayOfPositives(/* arr */) {
+//   throw new Error('Not implemented');
+// }
+function getArrayOfPositives(arr) {
+  return arr.filter((item) => item > 0);
 }
 
 /**
