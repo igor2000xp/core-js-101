@@ -469,10 +469,13 @@ function findAllOccurrences(arr, item) {
  *    [1, 2, 3, 4, 5]                   => '1,2,3,4,5'
  *    ['rock', 'paper', 'scissors']     => 'rock,paper,scissors'
  */
-function toStringList(/* arr */) {
-  throw new Error('Not implemented');
+// function toStringList(/* arr */) {
+//   throw new Error('Not implemented');
+// }
+function toStringList(arr) {
+  const result = arr.concat('').join();
+  return result.slice(0, result.length - 1);
 }
-
 
 /**
  * Sorts the specified array by country name first and city name
@@ -500,8 +503,17 @@ function toStringList(/* arr */) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+// function sortCitiesArray(/* arr */) {
+//   throw new Error('Not implemented');
+// }
+function sortCitiesArray(arr) {
+  return arr.sort((a, b) => {
+    if (a.country < b.country) return -1;
+    if (a.country > b.country) return 1;
+    if (a.city < b.city) return -1;
+    if (a.country === b.country) return 0;
+    return 0;
+  });
 }
 
 /**
@@ -522,8 +534,12 @@ function sortCitiesArray(/* arr */) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+// function getIdentityMatrix(/* n */) {
+//   throw new Error('Not implemented');
+// }
+function getIdentityMatrix(n) {
+  const arr = new Array(n).fill(new Array(n).fill(0));
+  return arr.map((item, index) => item.map((it, ind) => (ind === index ? 1 : it)));
 }
 
 /**
