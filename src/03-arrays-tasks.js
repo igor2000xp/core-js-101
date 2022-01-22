@@ -686,14 +686,13 @@ function getElementByIndexes(arr, indexes) {
 // }
 function swapHeadAndTail(arr) {
   const splitLength = Math.floor(arr.length / 2);
-  let newArr = [];
   let resultArr = [];
   if (arr.length % 2) {
-    newArr = arr.splice(0, splitLength);
+    const newArr = arr.splice(0, splitLength);
     const endArr = arr.splice(-(splitLength));
     resultArr = endArr.concat(arr, newArr);
   } else {
-    newArr = arr.splice(-(splitLength));
+    const newArr = arr.splice(-(splitLength));
     resultArr = newArr.concat(arr);
   }
   return resultArr;
