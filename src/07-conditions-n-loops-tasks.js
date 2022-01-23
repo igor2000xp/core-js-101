@@ -187,10 +187,19 @@ function isInsideCircle(circle, point) {
  *   'abracadabra'  => 'c'
  *   'entente' => null
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+// function findFirstSingleChar(/* str */) {
+//   throw new Error('Not implemented');
+// }
+function findFirstSingleChar(str) {
+  const newStr = str.split('');
+  let res = [];
+  newStr.forEach((el) => {
+    if (str.lastIndexOf(el) === str.indexOf(el)) res.push(el);
+  });
+  res = res.shift();
+  if (!res) res = null;
+  return res;
 }
-
 
 /**
  * Returns the string representation of math interval,
@@ -214,8 +223,17 @@ function findFirstSingleChar(/* str */) {
  *   5, 3, true, true   => '[3, 5]'
  *
  */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
+// function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
+//   throw new Error('Not implemented');
+// }
+function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
+  let res = [a];
+  res.push(b);
+  res.sort((c, d) => c - d);
+  res.splice(1, 0, ', ');
+
+  res = isStartIncluded ? ['['].concat(res) : ['('].concat(res);
+  return (isEndIncluded ? res.concat([']']) : res.concat([')'])).join('');
 }
 
 
@@ -231,8 +249,12 @@ function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
  * 'rotator' => 'rotator'
  * 'noon' => 'noon'
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+// function reverseString(/* str */) {
+//   throw new Error('Not implemented');
+// }
+function reverseString(str) {
+  const arr = str.split('');
+  return arr.reverse().join('');
 }
 
 
@@ -248,10 +270,13 @@ function reverseString(/* str */) {
  *   87354 => 45378
  *   34143 => 34143
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+// function reverseInteger(/* num */) {
+//   throw new Error('Not implemented');
+// }
+function reverseInteger(num) {
+  const arr = String(num).split('');
+  return arr.reverse().join('');
 }
-
 
 /**
  * Validates the CCN (credit card number) and return true if CCN is valid
@@ -273,9 +298,25 @@ function reverseInteger(/* num */) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function isCreditCardNumber(ccn) {
+  let newCcn = String(ccn);
+  newCcn = Array.from(newCcn, (item) => Number(item)).reverse();
+  const len = newCcn.length;
+  let number = 0;
+  let checkDigit = 0;
+
+  for (let i = 0; i < len; i += 1) {
+    number = Number(newCcn[i]);
+    if (i % 2 !== 0) {
+      number *= 2;
+      if (number > 9) number -= 9;
+    }
+
+    checkDigit += number;
+  }
+  return Boolean(!(checkDigit % 10));
 }
+
 
 /**
  * Returns the digital root of integer:
@@ -291,10 +332,20 @@ function isCreditCardNumber(/* ccn */) {
  *   10000 ( 1+0+0+0+0 = 1 ) => 1
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
-}
+// function getDigitalRoot(/* num */) {
+//   throw new Error('Not implemented');
+// }
+function getDigitalRoot(num) {
+  let newArr = String(num);
+  newArr = Array.from(newArr, (item) => Number(item));
+  const sum = newArr.reduce((a, b) => a + b);
 
+  if (sum > 9) {
+    return getDigitalRoot(sum);
+  }
+
+  return sum;
+}
 
 /**
  * Returns true if the specified string has the balanced brackets and false otherwise.
@@ -342,10 +393,12 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+// function toNaryString(/* num, n */) {
+//   throw new Error('Not implemented');
+// }
+function toNaryString(num, n) {
+  return num.toString(n);
 }
-
 
 /**
  * Returns the common directory path for specified array of full filenames.
