@@ -56,10 +56,14 @@ function parseDataFromIso8601(value) {
  *    Date(2012,1,1)    => true
  *    Date(2015,1,1)    => false
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
+// function isLeapYear(/* date */) {
+//   throw new Error('Not implemented');
+// }
+function isLeapYear(date) {
+  const year = date.getFullYear();
+  if (year % 4 === 0 && (year % 400 === 0 || year % 100 !== 0)) return true;
+  return false;
 }
-
 
 /**
  * Returns the string representation of the timespan between two dates.
@@ -76,10 +80,25 @@ function isLeapYear(/* date */) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,10,0,0,250)     => "00:00:00.250"
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
-function timeSpanToString(/* startDate, endDate */) {
-  throw new Error('Not implemented');
-}
+// function timeSpanToString(/* startDate, endDate */) {
+//   throw new Error('Not implemented');
+// }
+function timeSpanToString(startDate, endDate) {
+  const diff = endDate - startDate;
+  const msec = diff % 1000;
+  let sec = Math.floor(diff / 1000);
+  const hours = Math.floor(sec / (3600));
+  const min = Math.floor((sec - hours * 3600) / 60);
+  sec = sec - hours * 3600 - min * 60;
 
+  function print(num) {
+    if (num === 0) return '00';
+    if (num < 10) return `0${num}`;
+    return String(num);
+  }
+  const time = `${print(hours)}:${print(min)}:${print(sec)}.${msec === 0 ? '000' : msec}`;
+  return time;
+}
 
 /**
  * Returns the angle (in radians) between the hands of an analog clock
@@ -97,10 +116,20 @@ function timeSpanToString(/* startDate, endDate */) {
  *    Date.UTC(2016,3,5,18, 0) => Math.PI
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
-function angleBetweenClockHands(/* date */) {
-  throw new Error('Not implemented');
-}
+// function angleBetweenClockHands(/* date */) {
+//   throw new Error('Not implemented');
+// }
+function angleBetweenClockHands(date) {
+  const hours = date.getUTCHours() % 12;
+  const mins = date.getUTCMinutes();
+  const minsVector = mins * 6;
+  const hourVector = hours * 30 + mins / 2;
+  let angle = Math.abs(hourVector - minsVector);
 
+  angle = angle > 180 ? angle = 360 - angle : angle;
+
+  return (angle * Math.PI) / 180;
+}
 
 module.exports = {
   parseDataFromRfc2822,
