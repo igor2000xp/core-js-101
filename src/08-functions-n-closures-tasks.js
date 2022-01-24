@@ -199,7 +199,6 @@ function getIdGeneratorFunction(startFrom) {
     return temp;
   };
 }
-
 module.exports = {
   getComposition,
   getPowerFunction,
