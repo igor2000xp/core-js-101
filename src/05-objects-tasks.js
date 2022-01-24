@@ -119,33 +119,170 @@ function fromJSON(proto, json) {
  *  For more examples see unit tests.
  */
 
+// const cssSelectorBuilder = {
+//   element(/* value */) {
+//     throw new Error('Not implemented');
+//   },
+
+//   id(/* value */) {
+//     throw new Error('Not implemented');
+//   },
+
+//   class(/* value */) {
+//     throw new Error('Not implemented');
+//   },
+
+//   attr(/* value */) {
+//     throw new Error('Not implemented');
+//   },
+
+//   pseudoClass(/* value */) {
+//     throw new Error('Not implemented');
+//   },
+
+//   pseudoElement(/* value */) {
+//     throw new Error('Not implemented');
+//   },
+
+//   combine(/* selector1, combinator, selector2 */) {
+//     throw new Error('Not implemented');
+//   },
+// };
+class Selector {
+  constructor() {
+    this.order = [];
+    this.selectors = [];
+    this.unoSelectors = {
+      element: false,
+      id: false,
+      pseudoElement: false,
+    };
+  }
+
+  isDuplicate(selector) {
+    if (this.unoSelectors[selector]) {
+      throw new Error(
+        'Element, id and pseudo-element should not occur more then one time inside the selector',
+      );
+    }
+  }
+
+  isOrder(order) {
+    if (this.order[this.order.length - 1] > order) {
+      throw new Error(
+        'Selector parts should be arranged in the following order: element, id, class, attribute, pseudo-class, pseudo-element',
+      );
+    }
+  }
+
+  element(name) {
+    this.isDuplicate('element');
+    this.isOrder(1);
+    this.selectors.push(name);
+    this.unoSelectors.element = true;
+    this.order.push(1);
+
+    return this;
+  }
+
+  id(name) {
+    this.isDuplicate('id');
+    this.isOrder(2);
+    this.selectors.push(`#${name}`);
+    this.unoSelectors.id = true;
+    this.order.push(2);
+
+    return this;
+  }
+
+  pseudoElement(name) {
+    this.isDuplicate('pseudoElement');
+    this.isOrder(6);
+    this.selectors.push(`::${name}`);
+    this.unoSelectors.pseudoElement = true;
+    this.order.push(6);
+
+    return this;
+  }
+
+  class(name) {
+    this.isOrder(3);
+    this.selectors.push(`.${name}`);
+    this.order.push(3);
+
+    return this;
+  }
+
+  attr(name) {
+    this.isOrder(4);
+    this.selectors.push(`[${name}]`);
+    this.order.push(4);
+
+    return this;
+  }
+
+  pseudoClass(name) {
+    this.isOrder(5);
+    this.selectors.push(`:${name}`);
+    this.order.push(5);
+
+    return this;
+  }
+
+  stringify() {
+    return this.selectors.join('');
+  }
+
+  combine(selector1, combinator, selector2) {
+    this.selectors.push(selector1.stringify());
+    this.selectors.push(` ${combinator} `);
+    this.selectors.push(selector2.stringify());
+
+    return this;
+  }
+}
+
 const cssSelectorBuilder = {
-  element(/* value */) {
-    throw new Error('Not implemented');
+  element(value) {
+    const selector = new Selector(value).element(value);
+
+    return selector;
   },
 
-  id(/* value */) {
-    throw new Error('Not implemented');
+  id(value) {
+    const selector = new Selector(value).id(value);
+
+    return selector;
   },
 
-  class(/* value */) {
-    throw new Error('Not implemented');
+  class(value) {
+    const selector = new Selector(value).class(value);
+
+    return selector;
   },
 
-  attr(/* value */) {
-    throw new Error('Not implemented');
+  attr(value) {
+    const selector = new Selector(value).attr(value);
+
+    return selector;
   },
 
-  pseudoClass(/* value */) {
-    throw new Error('Not implemented');
+  pseudoClass(value) {
+    const selector = new Selector(value).pseudoClass(value);
+
+    return selector;
   },
 
-  pseudoElement(/* value */) {
-    throw new Error('Not implemented');
+  pseudoElement(value) {
+    const selector = new Selector(value).pseudoElement(value);
+
+    return selector;
   },
 
-  combine(/* selector1, combinator, selector2 */) {
-    throw new Error('Not implemented');
+  combine(selector1, combinator, selector2) {
+    const combined = new Selector().combine(selector1, combinator, selector2);
+
+    return combined;
   },
 };
 
