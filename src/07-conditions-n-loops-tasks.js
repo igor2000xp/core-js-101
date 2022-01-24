@@ -368,8 +368,31 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+// function isBracketsBalanced(/* str */) {
+//   throw new Error('Not implemented');
+// }
+function isBracketsBalanced(str) {
+  const brackets = {
+    '[': ']', '(': ')', '{': '}', '<': '>',
+  };
+  const arr = str.split('');
+  const result = [];
+
+  arr.forEach((el) => {
+    if (Object.keys(brackets).includes(el)) {
+      result.push(el);
+    } else if (
+      Object.values(brackets).includes(el)
+      && el === brackets[result[result.length - 1]]
+    ) {
+      result.pop();
+    } else if (
+      Object.values(brackets).includes(el)) {
+      result.push(el);
+    }
+  });
+
+  return result.length === 0;
 }
 
 
@@ -412,10 +435,22 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
-}
+// function getCommonDirectoryPath(/* pathes */) {
+//   throw new Error('Not implemented');
+// }
+function getCommonDirectoryPath(pathes) {
+  const result = [];
+  const splittedPaths = pathes.map((el) => [...el.split('/')]);
 
+  for (let i = 0; i < splittedPaths[0].length; i += 1) {
+    const item = splittedPaths[0][i];
+    const isItem = splittedPaths.every((el) => el[i] === item);
+    if (isItem) {
+      result.push(`${item} `);
+    }
+  }
+  return result.join('').replace(/ /g, '/');
+}
 
 /**
  * Returns the product of two specified matrixes.
@@ -435,10 +470,23 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+// function getMatrixProduct(/* m1, m2 */) {
+//   throw new Error('Not implemented');
+// }
+function getMatrixProduct(m1, m2) {
+  const product = [];
+  for (let i = 0; i < m1.length; i += 1) {
+    product[i] = [];
+    for (let j = 0; j < m2[0].length; j += 1) {
+      let result = 0;
+      for (let k = 0; k < m1[0].length; k += 1) {
+        result += m1[i][k] * m2[k][j];
+      }
+      product[i][j] = result;
+    }
+  }
+  return product;
 }
-
 
 /**
  * Returns the evaluation of the specified tic-tac-toe position.
